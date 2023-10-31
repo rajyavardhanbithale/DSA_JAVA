@@ -1,94 +1,106 @@
-import java.util.LinkedList;
+/**
+ * Main
+ */
+public class Main {
 
-public class Main{
-    public static void main(String[] args) {
-        LinkedList<Integer> Link = new LinkedList<Integer>();
+    public static class LL {
 
-        Link.add(1);
-        Link.add(2);
-        Link.add(5);
-        Link.add(7);
-        Link.add(3);
-        Link.add(11);
-        Link.add(10);
+        private Node head;
+        private Node tail;
+        private int size;
 
-        System.out.println("Traversing");
-        traverse(Link);
-
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println("Searching");
-        search(Link,10);
-        System.out.println();
-        search(Link,6);
-        
-        System.out.println(" ");
-        System.out.println("Insertion");
-        System.out.print("before : ");
-        
-        traverse(Link);
-        insertion(Link, 20, 2);
-
-        System.out.println("");
-        System.out.print("after : ");
-        traverse(Link);
-
-        System.out.println("");
-        System.out.println("");
-        System.out.println("Change In Value 10 : Index 0");
-        updateElement(Link, 10, 0);
-        traverse(Link);
-
-        System.out.println("");
-        System.out.println("");
-        System.out.println("Delete Index 1");
-        traverse(Link);
-        System.out.println("");
-        deletion(Link, 1);
-        
-        traverse(Link);
-    
-    }
-
-    // Traversing
-    static void traverse(LinkedList<Integer> linkedlist){
-        
-        for(int i=0;i<linkedlist.size();i++){
-            System.out.print(linkedlist.get(i)+ " ");
+        public LL(){
+            size = 0;
         }
 
-    }
+        public void insertBegin(int value){
+            Node node = new Node(value);
+            node.next = head;
+            head = node;
 
-    // Searching
-    static void search(LinkedList<Integer> linkedlist,int key){
-        boolean elementFound = false; 
-        for(int i=0;i<linkedlist.size();i++){
-            elementFound = true;
-            if(linkedlist.get(i)==key){
-                System.out.printf("found : %d at index %d",linkedlist.get(i),i);
-            }else{
-               elementFound = false;
+            if(tail == null){
+                tail = head;
             }
+            size +=1;
         }
 
-        if(!elementFound){
-             System.out.println("element not found");
+        public void insertLast(int value){
+
+            if(tail==null){
+                insertBegin(value);
+                return;
+            }
+            Node node = new Node(value);
+            tail.next = node;
+            tail = node;
+            size++;
+            
+        }
+
+        public void insertIndex(int value,int index){
+
+            Node temp = head;
+            for(int i=1;i<index;i++){
+                temp = temp.next;
+            }
+
+            Node node = new Node(value,temp.next);
+            temp.next = node;
+
+            size +=1;
+            
+        }
+
+        public void printll(){
+            Node node = head;
+            while (node!=null) {
+                System.out.print(node.value + " -> ");
+                node = node.next;
+            }
+            System.out.print("END");
+        }
+
+
+        
+        private class Node {
+            
+            private int value;
+            private Node next;
+
+            public Node(int value){
+                this.value = value;
+            }
+
+            public Node(int value,Node next){
+                this.value = value;
+                this.next = next;
+            }
+            
         }
         
+    } 
+
+    public static void main(String[] args) {
+        LL list = new LL();
+
+        list.insertBegin(1);
+        list.insertBegin(2);
+        list.insertBegin(3);
+        list.insertBegin(4);
+
+        list.printll();
+
+        list.insertLast(0);
+        list.insertLast(-1);
+
+        list.insertBegin(5);
+
+        System.out.println("");
+        list.printll();
+
+        System.out.println("");
+        list.insertIndex(8, 4);
+        list.printll();
+
     }
-
-    // Insertion
-    static void insertion(LinkedList<Integer> linkedList,int value,int index){
-        linkedList.add(index, value);
-    }
-
-    static void updateElement(LinkedList<Integer> linkedList,int value,int index){
-        linkedList.set(index,value);
-    }
-
-    static void deletion(LinkedList<Integer> linkedList,int index){
-        linkedList.remove(index);
-    }
-
-
 }
