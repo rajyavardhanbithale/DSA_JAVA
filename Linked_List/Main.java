@@ -3,67 +3,68 @@
  */
 public class Main {
 
-    public static class LL {
-
+    public static class LL{
         private Node head;
         private Node tail;
         private int size;
 
         public LL(){
-            size = 0;
+            size=0;
         }
 
         public void insertBegin(int value){
             Node node = new Node(value);
             node.next = head;
             head = node;
-
-            if(tail == null){
+            if(tail==null){
                 tail = head;
             }
             size +=1;
         }
 
         public void insertLast(int value){
-
             if(tail==null){
                 insertBegin(value);
-                return;
             }
+
             Node node = new Node(value);
             tail.next = node;
             tail = node;
-            size++;
-            
+            size +=1;
         }
 
         public void insertIndex(int value,int index){
-
             Node temp = head;
-            for(int i=1;i<index;i++){
+            for(int i=0;i<index;i++){
                 temp = temp.next;
             }
-
             Node node = new Node(value,temp.next);
             temp.next = node;
-
-            size +=1;
             
+            size +=1;
+
+        }
+
+        public void deleteBegin(){
+            // int value = head.value;
+            head = head.next;
+
+            if(head==null){
+                tail = head;
+            }
+            size -=1;
         }
 
         public void printll(){
             Node node = head;
-            while (node!=null) {
+            while (node !=null) {
                 System.out.print(node.value + " -> ");
                 node = node.next;
             }
             System.out.print("END");
         }
 
-
-        
-        private class Node {
-            
+        private class Node{
             private int value;
             private Node next;
 
@@ -75,10 +76,10 @@ public class Main {
                 this.value = value;
                 this.next = next;
             }
-            
         }
+    }
         
-    } 
+     
 
     public static void main(String[] args) {
         LL list = new LL();
@@ -93,13 +94,15 @@ public class Main {
         list.insertLast(0);
         list.insertLast(-1);
 
-        list.insertBegin(5);
-
         System.out.println("");
         list.printll();
 
         System.out.println("");
         list.insertIndex(8, 4);
+        list.printll();
+
+        System.out.println("");
+        list.deleteBegin();
         list.printll();
 
     }
